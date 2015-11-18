@@ -1,0 +1,13 @@
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Debug\CatiaLubeGroove.csprojResolveAssemblyReference.cache
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\CatiaLubeGroove.exe.config
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\CatiaLubeGroove.exe
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\CatiaLubeGroove.pdb
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\Interop.INFITF.dll
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\Interop.MECMOD.dll
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\Interop.PARTITF.dll
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\Interop.KnowledgewareTypeLib.dll
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Debug\Interop.ProductStructureTypeLib.dll
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Debug\CatiaLubeGroove.exe
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Debug\CatiaLubeGroove.pdb
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Debug\CatiaLubeGroove.MainForm.resources
+C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Debug\CatiaLubeGroove.csproj.GenerateResource.Cache
