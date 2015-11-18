@@ -265,9 +265,9 @@ namespace CatiaLubeGroove
 		
 		void Help_Clicked(object sender, EventArgs e)
 		{
-            if (File.Exists(directoryPath + @"\Help.pdf"))
+            if (File.Exists(directoryPath + @"\CatiaLubeGroove.pdf"))
             {
-                System.Diagnostics.Process.Start(directoryPath + @"\Help.pdf");
+                System.Diagnostics.Process.Start(directoryPath + @"\CatiaLubeGroove.pdf");
             }
 		}
 		

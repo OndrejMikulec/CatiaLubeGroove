@@ -177,6 +177,7 @@ namespace CatiaLubeGroove
 			this.MaximumSize = new System.Drawing.Size(510, 100);
 			this.MinimumSize = new System.Drawing.Size(510, 75);
 			this.Name = "MainForm";
+			this.ShowIcon = false;
 			this.Text = "CatiaLubeGroove";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.ResumeLayout(false);
