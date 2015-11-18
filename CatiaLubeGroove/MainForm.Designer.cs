@@ -73,7 +73,7 @@ namespace CatiaLubeGroove
 			// 
 			this.buttonZamknuti.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonZamknuti.BackColor = System.Drawing.Color.Red;
-			this.buttonZamknuti.Location = new System.Drawing.Point(442, 9);
+			this.buttonZamknuti.Location = new System.Drawing.Point(462, 9);
 			this.buttonZamknuti.Name = "buttonZamknuti";
 			this.buttonZamknuti.Size = new System.Drawing.Size(20, 20);
 			this.buttonZamknuti.TabIndex = 22;
@@ -83,6 +83,7 @@ namespace CatiaLubeGroove
 			// 
 			// buttonActionW
 			// 
+			this.buttonActionW.Enabled = false;
 			this.buttonActionW.Location = new System.Drawing.Point(43, 6);
 			this.buttonActionW.Name = "buttonActionW";
 			this.buttonActionW.Size = new System.Drawing.Size(25, 23);
@@ -161,7 +162,7 @@ namespace CatiaLubeGroove
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.ClientSize = new System.Drawing.Size(474, 36);
+			this.ClientSize = new System.Drawing.Size(494, 36);
 			this.Controls.Add(this.checkBoxIsolateAuto);
 			this.Controls.Add(this.textBoxEdges);
 			this.Controls.Add(this.labelEdges);
@@ -173,7 +174,8 @@ namespace CatiaLubeGroove
 			this.Controls.Add(this.buttonZamknuti);
 			this.Controls.Add(this.buttonActionX);
 			this.MaximizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(490, 75);
+			this.MaximumSize = new System.Drawing.Size(510, 100);
+			this.MinimumSize = new System.Drawing.Size(510, 75);
 			this.Name = "MainForm";
 			this.Text = "CatiaLubeGroove";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);

@@ -1,10 +1,29 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: Ondra
- * Date: 18/11/2015
- * Time: 06:36
  * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
+The MIT License (MIT)
+
+Copyright (c) 2015 Ondrej Mikulec
+o.mikulec@seznam.cz
+Vsetin, Czech Republic
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 using System;
 using System.Threading;
@@ -21,6 +40,10 @@ namespace CatiaLubeGroove
 		static bool debugRastr;
 		static bool debugInflated;
 		static bool isolateKeyAuto;
+		
+		static double width;
+		static double depth;
+		static double edges;
     	
 		static INFITF.Application catiaInstance;
 		static MECMOD.PartDocument oPartDocument;
@@ -30,9 +53,16 @@ namespace CatiaLubeGroove
         
         public static void mainAction(double width, double depth, double edges, bool isolateKeyAuto, bool debugRastr,  bool debugInflated )
         {
+        	//all try
+        	try {
+        	
         	MainAction.isolateKeyAuto = isolateKeyAuto;
         	MainAction.debugRastr = debugRastr;
         	MainAction.debugInflated = debugInflated;
+        	
+        	MainAction.width = width;
+        	MainAction.depth = depth;
+        	MainAction.edges = edges;
 
             try {
                 catiaInstance = (INFITF.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Catia.Application");
@@ -60,10 +90,16 @@ namespace CatiaLubeGroove
             foreach (PlanarfaceWithReference cpl in selectedPlanarfaces) {
           		action(cpl);
           	}
+          	
+          	//all catch
+        	} catch {}
         }
             	
           static void action(PlanarfaceWithReference cpl)
           {
+          	//all try
+          	try {
+          	
           	pointsListDouble.Clear();
         	linesListDouble.Clear();
           	
@@ -134,8 +170,8 @@ namespace CatiaLubeGroove
                 } catch {    }
             }
             
+
             oSketch.set_Name(sketchOriginName);
-            
             oPart.Update();
             
             
@@ -269,14 +305,14 @@ namespace CatiaLubeGroove
             myObdelnik win = null;
             if (maxObdelnikListIflatedNoLeak.Count>0) {
                 win = SupportClass.optimalMaxAndABRatio(maxObdelnikListIflatedNoLeak);
-                win.resizeAllEdges(-3);
+                win.resizeAllEdges(-edges);
                 finalP1x = Math.Round( win.P1x,1);
                 finalP1y =  Math.Round(win.P1y,1);
                 finalP2x =  Math.Round(win.P2x,1);
                 finalP2y =  Math.Round(win.P2y,1);
                 
                 myObdelnik finalObdelnik = new myObdelnik(finalP1x,finalP1y,finalP2x,finalP2y);
-                crossLube finalcrossLube = new crossLube(finalObdelnik,2,0.5);
+                crossLube finalcrossLube = new crossLube(finalObdelnik,width,depth);
            	            
 	            oPart.Update();
 	            
@@ -308,11 +344,14 @@ namespace CatiaLubeGroove
 				PARTITF.ShapeFactory oShapeFactory = (PARTITF.ShapeFactory)oPart.ShapeFactory;
 				PARTITF.Pocket oNewPadPlus = oShapeFactory.AddNewPocket ( oSketch, finalcrossLube.Depth); 
 
-	
-				oPart.Update();
+
+					oPart.Update();
+
+				
             } 
             
-            
+            //all catch
+          	}catch{}
         }
 	}
 }
