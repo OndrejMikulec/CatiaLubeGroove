@@ -85,6 +85,7 @@ namespace CatiaLubeGroove
 		                TopMost = false;
 		                buttonZamknuti.BackColor = Color.Green;
 		            }
+		            readIni.ReadLine();
 					bool autoKeys = Boolean.Parse(readIni.ReadLine());
 	        		if (autoKeys) {
 						checkBoxIsolateAuto.Checked = true;
@@ -125,7 +126,9 @@ namespace CatiaLubeGroove
 		{
         	foreach (Control con in Controls ) {
     			con.Enabled = true;	
-			}			
+			}
+			
+			buttonActionW.Enabled = false;
 		}
 		
 		void disableAll()

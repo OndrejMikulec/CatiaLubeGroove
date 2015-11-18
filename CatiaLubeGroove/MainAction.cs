@@ -122,7 +122,7 @@ namespace CatiaLubeGroove
             List<object[]> pointsListObjects = new List<object[]>();
             List<MECMOD.Point2D> mecmodPointsForRemoveList = new List<MECMOD.Point2D>();
             List<object[]> linesListObjects = new List<object[]>();
-            List<MECMOD.Line2D> mecmodlineForRemoveList = new List<MECMOD.Line2D>();
+            List<INFITF.AnyObject> mecmodlineForRemoveList = new List<INFITF.AnyObject>();
             
            string sketchOriginName = oSketch.get_Name();
            oSketch.set_Name(oSketch.get_Name()+ "_Isolate_me_please.");
@@ -166,6 +166,61 @@ namespace CatiaLubeGroove
                             linesListObjects.Add(oPointArray);
                             mecmodlineForRemoveList.Add(oLine);
                         }
+                		//NOT fully solved! Just gets endpoints and connets them by a line.
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeCircle2D) {
+                            MECMOD.Circle2D oCircle = (MECMOD.Circle2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            oCircle.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(oCircle);
+                        }
+                		//NOT fully solved! Just gets endpoints and connets them by a line.
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeEllipse2D) {
+                            MECMOD.Ellipse2D oElipse = (MECMOD.Ellipse2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            oElipse.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(oElipse);
+                        }
+                		//NOT fully solved! Just gets endpoints and connets them by a line.
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeHyperbola2D) {
+                            MECMOD.Hyperbola2D oHyp = (MECMOD.Hyperbola2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            oHyp.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(oHyp);
+                        }
+                		//NOT fully solved! Just gets endpoints and connets them by a line.
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeParabola2D) {
+                            MECMOD.Parabola2D oParab = (MECMOD.Parabola2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            oParab.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(oParab);
+                        }
+                		//NOT fully solved! Just gets endpoints and connets them by a line.
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeSpline2D) {
+                            MECMOD.Spline2D oSpline = (MECMOD.Spline2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            oSpline.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(oSpline);
+                        }
+                		//?????????????????????????????
+                        if (geo.GeometricType == MECMOD.CatGeometricType.catGeoTypeUnknown) {
+                            MECMOD.Curve2D o = (MECMOD.Curve2D)geo;
+                            isolate = true;
+                            object[] oPointArray = new object[4];
+                            o.GetEndPoints(oPointArray);
+                            linesListObjects.Add(oPointArray);
+                            mecmodlineForRemoveList.Add(o);
+                        }
+
                     }
                 } catch {    }
             }
@@ -180,7 +235,7 @@ namespace CatiaLubeGroove
             foreach (MECMOD.Point2D p in mecmodPointsForRemoveList) {
             	oPartDocument.Selection.Add(p);
             }
-           foreach (MECMOD.Line2D l in mecmodlineForRemoveList) {
+           foreach (INFITF.AnyObject l in mecmodlineForRemoveList) {
             	oPartDocument.Selection.Add(l);
             }
             oPartDocument.Selection.Delete();

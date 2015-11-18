@@ -24,6 +24,7 @@ namespace CatiaLubeGroove
 		private System.Windows.Forms.TextBox textBoxEdges;
 		private System.Windows.Forms.Label labelEdges;
 		private System.Windows.Forms.CheckBox checkBoxIsolateAuto;
+		private System.Windows.Forms.ToolTip toolTip1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -46,6 +47,7 @@ namespace CatiaLubeGroove
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.buttonActionX = new System.Windows.Forms.Button();
 			this.buttonZamknuti = new System.Windows.Forms.Button();
 			this.buttonActionW = new System.Windows.Forms.Button();
@@ -56,6 +58,7 @@ namespace CatiaLubeGroove
 			this.textBoxEdges = new System.Windows.Forms.TextBox();
 			this.labelEdges = new System.Windows.Forms.Label();
 			this.checkBoxIsolateAuto = new System.Windows.Forms.CheckBox();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// buttonActionX
@@ -78,6 +81,7 @@ namespace CatiaLubeGroove
 			this.buttonZamknuti.Size = new System.Drawing.Size(20, 20);
 			this.buttonZamknuti.TabIndex = 22;
 			this.buttonZamknuti.TabStop = false;
+			this.toolTip1.SetToolTip(this.buttonZamknuti, "TopMost");
 			this.buttonZamknuti.UseVisualStyleBackColor = false;
 			this.buttonZamknuti.Click += new System.EventHandler(this.ButtonZamknutiClick);
 			// 
@@ -107,6 +111,7 @@ namespace CatiaLubeGroove
 			this.textBoxWidth.Name = "textBoxWidth";
 			this.textBoxWidth.Size = new System.Drawing.Size(30, 20);
 			this.textBoxWidth.TabIndex = 25;
+			this.textBoxWidth.Click += new System.EventHandler(this.textBox_Enter);
 			this.textBoxWidth.Enter += new System.EventHandler(this.textBox_Enter);
 			this.textBoxWidth.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
 			// 
@@ -116,6 +121,7 @@ namespace CatiaLubeGroove
 			this.textBoxDepth.Name = "textBoxDepth";
 			this.textBoxDepth.Size = new System.Drawing.Size(30, 20);
 			this.textBoxDepth.TabIndex = 27;
+			this.textBoxDepth.Click += new System.EventHandler(this.textBox_Enter);
 			this.textBoxDepth.Enter += new System.EventHandler(this.textBox_Enter);
 			this.textBoxDepth.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
 			// 
@@ -134,6 +140,7 @@ namespace CatiaLubeGroove
 			this.textBoxEdges.Name = "textBoxEdges";
 			this.textBoxEdges.Size = new System.Drawing.Size(30, 20);
 			this.textBoxEdges.TabIndex = 29;
+			this.textBoxEdges.Click += new System.EventHandler(this.textBox_Enter);
 			this.textBoxEdges.Enter += new System.EventHandler(this.textBox_Enter);
 			this.textBoxEdges.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
 			// 
