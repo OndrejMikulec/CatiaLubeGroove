@@ -37,14 +37,19 @@ namespace CatiaLubeGroove
 
 	public partial class MainForm : Form
 	{
-       	static string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-        static string directoryPath = System.IO.Path.GetDirectoryName(exePath);
-        static string iniPath = directoryPath + @"\Setup.ini";
-
+		const bool debug1 = false;
+		const bool debug2 = false;
 		
+       	static string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        static string directoryPath = Path.GetDirectoryName(exePath);
+        static string iniPath = directoryPath + @"\Setup.ini";
+        
+        public static MainForm myForm;
+	
 		public MainForm()
 		{
-
+			myForm = this;
+			
 			InitializeComponent();
 			
             MainMenu mainMenu = new MainMenu();
@@ -54,8 +59,8 @@ namespace CatiaLubeGroove
             this.Menu = mainMenu;
 
 			iniReadFormSetup();
-
 		}
+
 		void iniReadFormSetup()
 		{
 			try {			
@@ -139,14 +144,14 @@ namespace CatiaLubeGroove
 		void ButtonActionXClick(object sender, EventArgs e)
 		{
 			disableAll();
-			MainAction.mainAction("Cross",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,false,false);
+			MainAction.mainAction("Cross",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
 			enableAll();
 		}
 		
 		void ButtonActionWClick(object sender, EventArgs e)
 		{
 			disableAll();
-			MainAction.mainAction("ZigZag",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,false,false);
+			MainAction.mainAction("ZigZag",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
 			enableAll();
 		}
 		

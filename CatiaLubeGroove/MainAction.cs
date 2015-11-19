@@ -29,6 +29,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace CatiaLubeGroove
 {
@@ -91,10 +92,16 @@ namespace CatiaLubeGroove
             	}
             }
 
-            foreach (PlanarfaceWithReference cpl in selectedPlanarfaces) {
-          		action(cpl);
+          	if (selectedPlanarfaces.Count>=1) {
+            	foreach (PlanarfaceWithReference cpl in selectedPlanarfaces) {
+          			action(cpl); 
+          		}
+          	} else {
+          		MainForm.myForm.Activate();
+          		MessageBox.Show("First select one or more planar faces!");
+          		return;
           	}
-          	
+
           	//all catch
         	} catch {}
         }
@@ -257,29 +264,34 @@ namespace CatiaLubeGroove
             double maxY = pointsListDouble.Max(setting => setting[1]);
             const double delitel = 20;
             
-            double rastr = (Math.Min(Math.Abs(maxX-minX),(Math.Abs(maxY-minY))))/delitel;
-            if (rastr<0.1) {
-                rastr = 0.1;
+            double rastrX = (Math.Abs(maxX-minX))/delitel;
+            if (rastrX<0.1) {
+                rastrX = 0.1;
+            }
+            
+            double rastrY = (Math.Abs(maxY-minY))/delitel;
+            if (rastrY<0.1) {
+                rastrY = 0.1;
             }
             
             List<myObdelnik> allObdelnikInThisLimit = new List<myObdelnik>();
             
-            double rastrX = minX;
-            double rastrY = minY;
-            while (rastrY<maxY) {
-                while (rastrX<maxX) {
-                    myObdelnik rastrInsideLim = new myObdelnik(rastrX,rastrY,rastrX+rastr,rastrY+rastr);
+            double rastrXvalue = minX;
+            double rastrYvalue = minY;
+            while (rastrYvalue<maxY) {
+                while (rastrXvalue<maxX) {
+                    myObdelnik rastrInsideLim = new myObdelnik(rastrXvalue,rastrYvalue,rastrXvalue+rastrX,rastrYvalue+rastrY);
                     allObdelnikInThisLimit.Add(rastrInsideLim);
-                    rastrX += rastr;
+                    rastrXvalue += rastrX;
                 }
-                rastrX = minX;
-                rastrY += rastr;
+                rastrXvalue = minX;
+                rastrYvalue += rastrY;
             }
  
             List<myObdelnik> allObdelnikInThisLimitNoZero = new List<myObdelnik>();
             foreach (myObdelnik obl in allObdelnikInThisLimit) {
                 if (obl.obsah!=0) {
-                    obl.resizeAllEdges(-rastr*0.1);
+            		obl.resizeAllEdges(-Math.Min(rastrX,rastrY)*0.1);
                     allObdelnikInThisLimitNoZero.Add(obl);
                 }
             }            
@@ -295,44 +307,53 @@ namespace CatiaLubeGroove
             	DebugCreateAll.createAll(allObdelnikInThisLimitNoCross,oSketch,catiaInstance);
             }            
             
-            double inflate = rastr/10;
-            double maxInflateArea = Math.Max(Math.Abs(maxX-minX),(Math.Abs(maxY-minY))+rastr)*Math.Max(Math.Abs(maxX-minX),(Math.Abs(maxY-minY))+rastr);
+            
+                        
+            double inflateX = rastrX/10;
+            double inflateY = rastrY/10;
+            double maxInflateAreaEdge = Math.Max(Math.Abs(maxX-minX)+rastrX,Math.Abs(maxY-minY)+rastrY);
+            double maxInflateArea = maxInflateAreaEdge*maxInflateAreaEdge;
             List<myObdelnik> maxObdelnikListIflatedNoLeak = new List<myObdelnik>();
             int count = 1;
             foreach (myObdelnik obl in allObdelnikInThisLimitNoCross) {
-                obl.resizeAllEdges(-rastr*0.1);
+                obl.resizeAllEdges(-Math.Min(rastrX,rastrY)*0.1);
                 bool leaked = false;
                 if (count==1 ) {
                     double initilaArea = obl.obsah;
-                    leaked = SupportClass.inflationLoop("B",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflate,initilaArea,maxInflateArea);
+                    leaked = SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
                 }
                 if (count==2 ) {
                     double initilaArea = obl.obsah;
-                    leaked = SupportClass.inflationLoop("T",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflate,initilaArea,maxInflateArea);
+                    leaked = SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
                 }
                 if (count==3 ) {
                     double initilaArea = obl.obsah;
-                    leaked =  SupportClass.inflationLoop("R",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflate,initilaArea,maxInflateArea);
+                    leaked =  SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
                 }
                 if (count==4 ) {
                     double initilaArea = obl.obsah;
-                    leaked =  SupportClass.inflationLoop("L",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflate,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflate,initilaArea,maxInflateArea);
+                    leaked =  SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
                 }
                 if (!leaked) {
-                    maxObdelnikListIflatedNoLeak.Add(obl);
-                }
+                	if (type=="Cross"&&Math.Min(obl.A,obl.B)>width*2) {
+                		maxObdelnikListIflatedNoLeak.Add(obl);
+                	}
+                	if (type=="ZigZag"&&Math.Min(obl.A,obl.B)>width*3) {
+                		maxObdelnikListIflatedNoLeak.Add(obl);
+                	}                	
+                 }
                 
                 count++;
                 if (count>4) {
@@ -343,6 +364,14 @@ namespace CatiaLubeGroove
             if (debugInflated) {
             	DebugCreateAll.createAll(maxObdelnikListIflatedNoLeak,oSketch,catiaInstance);
             }
+            
+            List<myObdelnik> maxObdelnikListIflatedNoLeakEdgesResized = new List<myObdelnik>();
+            foreach (myObdelnik obl in maxObdelnikListIflatedNoLeak) {
+            	obl.resizeAllEdges(-edges);
+            	if (obl.obsah>0) {
+            		maxObdelnikListIflatedNoLeakEdgesResized.Add(obl);
+            	}
+            }
    
             double finalP1x = 0;
             double finalP1y = 0;
@@ -350,9 +379,10 @@ namespace CatiaLubeGroove
             double finalP2y = 0;
 
             myObdelnik win = null;
-            if (maxObdelnikListIflatedNoLeak.Count>0) {
-                win = SupportClass.optimalMaxAndABRatio(maxObdelnikListIflatedNoLeak);
-                win.resizeAllEdges(-edges);
+            if (maxObdelnikListIflatedNoLeakEdgesResized.Count>0) {
+             	
+                win = SupportClass.optimalMaxAndABRatio(maxObdelnikListIflatedNoLeakEdgesResized);
+                
                 finalP1x = Math.Round( win.P1x,1);
                 finalP1y =  Math.Round(win.P1y,1);
                 finalP2x =  Math.Round(win.P2x,1);
@@ -384,7 +414,11 @@ namespace CatiaLubeGroove
 				PARTITF.Pocket oNewPadPlus = oShapeFactory.AddNewPocket ( oSketch, finalcrossLube.Depth); 
 
 				oPart.Update();
-            } 
+            } else {
+            	MainForm.myForm.Activate();
+            	MessageBox.Show(@"Groove for the face will not be created!
+Area si too small.");
+            }
             
             //all catch
           	}catch{}

@@ -102,26 +102,28 @@ namespace CatiaLubeGroove
 			if( ppp != null)
 			{
 				Point cursorPos = new Point(Cursor.Position.X,Cursor.Position.Y);
-				Point cursorPostemp = new Point(0,0);
-				Cursor.Position = cursorPostemp;
+				Point cursorPostemp = new Point(MainForm.myForm.Location.X+10,MainForm.myForm.Location.Y+5);
 				
 			    IntPtr h = ppp.MainWindowHandle;
 			    SetForegroundWindow(h);
 			    Thread.Sleep(500);
+			    Cursor.Position = cursorPostemp;
 			    SendKeys.SendWait("%E");
 		    	SetForegroundWindow(h);
-		    	Thread.Sleep(100);
+		    	Thread.Sleep(500);
+		    	Cursor.Position = cursorPostemp;
             	SendKeys.SendWait("{UP} ");			    	
         	 	SetForegroundWindow(h);
         	 	Thread.Sleep(500);
+        	 	Cursor.Position = cursorPostemp;
         	 	SendKeys.SendWait("{RIGHT} ");
         	 	SetForegroundWindow(h);
         	 	Thread.Sleep(500);
+        	 	Cursor.Position = cursorPostemp;
         	 	SendKeys.SendWait("{I} ");
         	 	
         	 	Cursor.Position = cursorPos;
 			}  	
         }
-
-	}
+ 	}
 }
