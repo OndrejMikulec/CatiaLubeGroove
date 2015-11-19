@@ -29,6 +29,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace CatiaLubeGroove
 {
@@ -99,22 +101,25 @@ namespace CatiaLubeGroove
         	 System.Diagnostics.Process ppp = System.Diagnostics.Process.GetProcessesByName("CNEXT").FirstOrDefault();
 			if( ppp != null)
 			{
+				Point cursorPos = new Point(Cursor.Position.X,Cursor.Position.Y);
+				Point cursorPostemp = new Point(0,0);
+				Cursor.Position = cursorPostemp;
+				
 			    IntPtr h = ppp.MainWindowHandle;
 			    SetForegroundWindow(h);
 			    Thread.Sleep(500);
-			    System.Windows.Forms.SendKeys.SendWait("%E");
-			    
-
-			    	SetForegroundWindow(h);
-			    	Thread.Sleep(100);
-                	System.Windows.Forms.SendKeys.SendWait("{UP} ");			    	
-
+			    SendKeys.SendWait("%E");
+		    	SetForegroundWindow(h);
+		    	Thread.Sleep(100);
+            	SendKeys.SendWait("{UP} ");			    	
         	 	SetForegroundWindow(h);
         	 	Thread.Sleep(500);
-        	 	System.Windows.Forms.SendKeys.SendWait("{RIGHT} ");
+        	 	SendKeys.SendWait("{RIGHT} ");
         	 	SetForegroundWindow(h);
         	 	Thread.Sleep(500);
-        	 	System.Windows.Forms.SendKeys.SendWait("{I} ");
+        	 	SendKeys.SendWait("{I} ");
+        	 	
+        	 	Cursor.Position = cursorPos;
 			}  	
         }
 
