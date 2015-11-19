@@ -101,6 +101,22 @@ namespace CatiaLubeGroove
   
     	}
     	
+    	public void toSketch(MECMOD.Factory2D oFactory2D)
+    	{
+             MECMOD.Line2D oLine2D1 =  oFactory2D.CreateLine(p1[0],p1[1],p2[0],p2[1]);
+            MECMOD.Line2D oLine2D2 =  oFactory2D.CreateLine(p2[0],p2[1],p3[0],p3[1]);
+            MECMOD.Line2D oLine2D3 =  oFactory2D.CreateLine(p3[0],p3[1],p4[0],p4[1]);
+            MECMOD.Line2D oLine2D4 =  oFactory2D.CreateLine(p4[0],p4[1],p5[0],p5[1]);
+            MECMOD.Line2D oLine2D5 =  oFactory2D.CreateLine(p5[0],p5[1],p6[0],p6[1]);
+            MECMOD.Line2D oLine2D6 =  oFactory2D.CreateLine(p6[0],p6[1],p7[0],p7[1]);
+            MECMOD.Line2D oLine2D7 =  oFactory2D.CreateLine(p7[0],p7[1],p8[0],p8[1]);
+            MECMOD.Line2D oLine2D8 =  oFactory2D.CreateLine(p8[0],p8[1],p9[0],p9[1]);
+            MECMOD.Line2D oLine2D9 =  oFactory2D.CreateLine(p9[0],p9[1],p10[0],p10[1]);
+            MECMOD.Line2D oLine2D10 =  oFactory2D.CreateLine(p10[0],p10[1],p11[0],p11[1]);
+            MECMOD.Line2D oLine2D11 =  oFactory2D.CreateLine(p11[0],p11[1],p12[0],p12[1]);
+            MECMOD.Line2D oLine2D12 =  oFactory2D.CreateLine(p12[0],p12[1],p1[0],p1[1]);    		
+    	}
+    	
 	    public double[] P1
 	    {
 	    	get {

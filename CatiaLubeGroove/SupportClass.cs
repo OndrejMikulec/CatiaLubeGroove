@@ -54,6 +54,8 @@ namespace CatiaLubeGroove
             return winner;
         }
         
+        /// <param name="direction">accepting params: {R, L, B, T}</param>
+        /// <returns>If leaked = True</returns>
         public static bool inflationLoop(string direction, myObdelnik obl, List<double[]> linesListDouble, double inflate, double initilaArea,double maxInflateArea)
         {
             if (direction=="R") {

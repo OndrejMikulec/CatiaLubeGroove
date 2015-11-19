@@ -87,7 +87,6 @@ namespace CatiaLubeGroove
 			// 
 			// buttonActionW
 			// 
-			this.buttonActionW.Enabled = false;
 			this.buttonActionW.Location = new System.Drawing.Point(43, 6);
 			this.buttonActionW.Name = "buttonActionW";
 			this.buttonActionW.Size = new System.Drawing.Size(25, 23);
@@ -95,6 +94,7 @@ namespace CatiaLubeGroove
 			this.buttonActionW.TabStop = false;
 			this.buttonActionW.Text = "W";
 			this.buttonActionW.UseVisualStyleBackColor = true;
+			this.buttonActionW.Click += new System.EventHandler(this.ButtonActionWClick);
 			// 
 			// labelWidth
 			// 

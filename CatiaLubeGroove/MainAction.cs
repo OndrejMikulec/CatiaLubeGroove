@@ -51,7 +51,11 @@ namespace CatiaLubeGroove
         static List<double[]> pointsListDouble = new List<double[]>();
         static List<double[]> linesListDouble = new List<double[]>();
         
-        public static void mainAction(double width, double depth, double edges, bool isolateKeyAuto, bool debugRastr,  bool debugInflated )
+        static string type;
+        
+
+        /// <param name="type">accepting params: {Cross, ZigZag}</param>
+        public static void mainAction(string type, double width, double depth, double edges, bool isolateKeyAuto, bool debugRastr,  bool debugInflated )
         {
         	//all try
         	try {
@@ -63,13 +67,13 @@ namespace CatiaLubeGroove
         	MainAction.width = width;
         	MainAction.depth = depth;
         	MainAction.edges = edges;
+        	
+        	MainAction.type = type;
 
             try {
                 catiaInstance = (INFITF.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Catia.Application");
             } catch {return;}
             oPartDocument  = (MECMOD.PartDocument)catiaInstance.ActiveDocument;
-            
-            
 
             MECMOD.PlanarFace oPlanarFace = null;
             INFITF.Reference oReference = null;
@@ -108,7 +112,6 @@ namespace CatiaLubeGroove
            	MECMOD.Body oBody = (MECMOD.Body)oPartDocument.Selection.FindObject("CATIAShape").Parent;
 			MECMOD.Part oPart = (MECMOD.Part)oBody.Parent;
             
-            
             MECMOD.Sketch oSketch = oBody.Sketches.Add(cpl.OReference);
             MECMOD.Factory2D oFactory2D = oSketch.OpenEdition();
             
@@ -116,7 +119,6 @@ namespace CatiaLubeGroove
             oSketch.CloseEdition();
             
             oPart.Update();
-            
             oPartDocument.Selection.Clear();
             
             List<object[]> pointsListObjects = new List<object[]>();
@@ -224,11 +226,9 @@ namespace CatiaLubeGroove
                     }
                 } catch {    }
             }
-            
 
             oSketch.set_Name(sketchOriginName);
             oPart.Update();
-            
             
             oFactory2D = oSketch.OpenEdition();
             oPartDocument.Selection.Clear();
@@ -242,7 +242,6 @@ namespace CatiaLubeGroove
             oSketch.CloseEdition();
             
             oPart.Update();
-            
 
             foreach (object[] point in pointsListObjects) {
                 pointsListDouble.Add(new double[] {Double.Parse(point[0].ToString()),Double.Parse(point[1].ToString())});
@@ -251,7 +250,6 @@ namespace CatiaLubeGroove
             foreach (object[] line in linesListObjects) {
                 linesListDouble.Add(new double[] {Double.Parse(line[0].ToString()),Double.Parse(line[1].ToString()),Double.Parse(line[2].ToString()),Double.Parse(line[3].ToString())});
             }
-            
             
             double minX = pointsListDouble.Min(setting => setting[0]);
             double maxX = pointsListDouble.Max(setting => setting[0]);
@@ -277,9 +275,7 @@ namespace CatiaLubeGroove
                 rastrX = minX;
                 rastrY += rastr;
             }
-            
-
-
+ 
             List<myObdelnik> allObdelnikInThisLimitNoZero = new List<myObdelnik>();
             foreach (myObdelnik obl in allObdelnikInThisLimit) {
                 if (obl.obsah!=0) {
@@ -294,12 +290,10 @@ namespace CatiaLubeGroove
                     allObdelnikInThisLimitNoCross.Add(obl2);
                 }
             }  
-
             
             if (debugRastr) {
             	DebugCreateAll.createAll(allObdelnikInThisLimitNoCross,oSketch,catiaInstance);
             }            
-
             
             double inflate = rastr/10;
             double maxInflateArea = Math.Max(Math.Abs(maxX-minX),(Math.Abs(maxY-minY))+rastr)*Math.Max(Math.Abs(maxX-minX),(Math.Abs(maxY-minY))+rastr);
@@ -346,12 +340,10 @@ namespace CatiaLubeGroove
                 }
             }
             
-            
             if (debugInflated) {
             	DebugCreateAll.createAll(maxObdelnikListIflatedNoLeak,oSketch,catiaInstance);
             }
-                
- 
+   
             double finalP1x = 0;
             double finalP1y = 0;
             double finalP2x = 0;
@@ -368,25 +360,17 @@ namespace CatiaLubeGroove
                 
                 myObdelnik finalObdelnik = new myObdelnik(finalP1x,finalP1y,finalP2x,finalP2y);
                 crossLube finalcrossLube = new crossLube(finalObdelnik,width,depth);
+                ZigZagLube finalZigZagLube = new ZigZagLube(finalObdelnik,width,depth);
            	            
 	            oPart.Update();
-	            
 	            oFactory2D = oSketch.OpenEdition();
              
-            
-	            MECMOD.Line2D oLine2D1 =  oFactory2D.CreateLine(finalcrossLube.P1[0],finalcrossLube.P1[1],finalcrossLube.P2[0],finalcrossLube.P2[1]);
-	            MECMOD.Line2D oLine2D2 =  oFactory2D.CreateLine(finalcrossLube.P2[0],finalcrossLube.P2[1],finalcrossLube.P3[0],finalcrossLube.P3[1]);
-	            MECMOD.Line2D oLine2D3 =  oFactory2D.CreateLine(finalcrossLube.P3[0],finalcrossLube.P3[1],finalcrossLube.P4[0],finalcrossLube.P4[1]);
-	            MECMOD.Line2D oLine2D4 =  oFactory2D.CreateLine(finalcrossLube.P4[0],finalcrossLube.P4[1],finalcrossLube.P5[0],finalcrossLube.P5[1]);
-	            MECMOD.Line2D oLine2D5 =  oFactory2D.CreateLine(finalcrossLube.P5[0],finalcrossLube.P5[1],finalcrossLube.P6[0],finalcrossLube.P6[1]);
-	            MECMOD.Line2D oLine2D6 =  oFactory2D.CreateLine(finalcrossLube.P6[0],finalcrossLube.P6[1],finalcrossLube.P7[0],finalcrossLube.P7[1]);
-	            MECMOD.Line2D oLine2D7 =  oFactory2D.CreateLine(finalcrossLube.P7[0],finalcrossLube.P7[1],finalcrossLube.P8[0],finalcrossLube.P8[1]);
-	            MECMOD.Line2D oLine2D8 =  oFactory2D.CreateLine(finalcrossLube.P8[0],finalcrossLube.P8[1],finalcrossLube.P9[0],finalcrossLube.P9[1]);
-	            MECMOD.Line2D oLine2D9 =  oFactory2D.CreateLine(finalcrossLube.P9[0],finalcrossLube.P9[1],finalcrossLube.P10[0],finalcrossLube.P10[1]);
-	            MECMOD.Line2D oLine2D10 =  oFactory2D.CreateLine(finalcrossLube.P10[0],finalcrossLube.P10[1],finalcrossLube.P11[0],finalcrossLube.P11[1]);
-	            MECMOD.Line2D oLine2D11 =  oFactory2D.CreateLine(finalcrossLube.P11[0],finalcrossLube.P11[1],finalcrossLube.P12[0],finalcrossLube.P12[1]);
-	            MECMOD.Line2D oLine2D12 =  oFactory2D.CreateLine(finalcrossLube.P12[0],finalcrossLube.P12[1],finalcrossLube.P1[0],finalcrossLube.P1[1]);
-	            
+	            if (type=="ZigZag") {
+	            	finalZigZagLube.toSketch(oFactory2D);
+	            } else {
+	            	finalcrossLube.toSketch(oFactory2D);
+	            }
+
 	            oSketch.CloseEdition();
 				oPart.Update();
 				
@@ -399,10 +383,7 @@ namespace CatiaLubeGroove
 				PARTITF.ShapeFactory oShapeFactory = (PARTITF.ShapeFactory)oPart.ShapeFactory;
 				PARTITF.Pocket oNewPadPlus = oShapeFactory.AddNewPocket ( oSketch, finalcrossLube.Depth); 
 
-
-					oPart.Update();
-
-				
+				oPart.Update();
             } 
             
             //all catch

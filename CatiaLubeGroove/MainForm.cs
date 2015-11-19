@@ -127,8 +127,6 @@ namespace CatiaLubeGroove
         	foreach (Control con in Controls ) {
     			con.Enabled = true;	
 			}
-			
-			buttonActionW.Enabled = false;
 		}
 		
 		void disableAll()
@@ -141,7 +139,14 @@ namespace CatiaLubeGroove
 		void ButtonActionXClick(object sender, EventArgs e)
 		{
 			disableAll();
-			MainAction.mainAction(Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,false,false);
+			MainAction.mainAction("Cross",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,false,false);
+			enableAll();
+		}
+		
+		void ButtonActionWClick(object sender, EventArgs e)
+		{
+			disableAll();
+			MainAction.mainAction("ZigZag",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,false,false);
 			enableAll();
 		}
 		

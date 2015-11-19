@@ -154,8 +154,7 @@ namespace CatiaLubeGroove
                 
                         double lineAngleL = projectionYL/projectionXL;
                         double  yInterceptL = l[1]-lineAngleL*l[0];
-                        
-                        
+                          
                         //y=a*x+c 
                         double[] intersection1 = new double[] {(p1y-yInterceptL)/lineAngleL,p1y};
                         if (intersection1[0]>=p1x&&intersection1[0]<=p2x) {
@@ -178,16 +177,13 @@ namespace CatiaLubeGroove
                    if (projectionXL==0||projectionYL==0) {
                         return true;
                     }
- 
-           		 }
-
+        		 }
         	}
             return false;
          }
         
         public bool inflateBottomWillCross(List<double[]> linesList,double x)
         {
-            
             double orig = p1y;
             bool returningBool = false;
             p1y -= x;
