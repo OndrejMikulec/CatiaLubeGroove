@@ -1,8 +1,5 @@
 C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\CatiaLubeGroove.exe.config
 C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\CatiaLubeGroove.exe
-C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\Interop.INFITF.dll
-C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\Interop.MECMOD.dll
-C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\Interop.PARTITF.dll
 C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\Interop.KnowledgewareTypeLib.dll
 C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\bin\Release\Interop.ProductStructureTypeLib.dll
 C:\Users\Ondra\Documents\SharpDevelop Projects\CatiaLubeGroove\CatiaLubeGroove\obj\Release\CatiaLubeGroove.csprojResolveAssemblyReference.cache

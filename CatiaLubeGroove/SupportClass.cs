@@ -39,6 +39,8 @@ namespace CatiaLubeGroove
 	{
 		[System.Runtime.InteropServices.DllImport ("User32.dll")]
 		static extern int SetForegroundWindow(IntPtr point);
+		
+		public enum inflateDirection  {L,R,T,B}
 
         public static myObdelnik optimalMaxAndABRatio(List<myObdelnik> inputList)
         {
@@ -58,9 +60,9 @@ namespace CatiaLubeGroove
         
         /// <param name="direction">accepting params: {R, L, B, T}</param>
         /// <returns>If leaked = True</returns>
-        public static bool inflationLoop(string direction, myObdelnik obl, List<double[]> linesListDouble, double inflate, double initilaArea,double maxInflateArea)
+        public static bool inflationLoop(inflateDirection direction, myObdelnik obl, List<double[]> linesListDouble, double inflate, double initilaArea,double maxInflateArea)
         {
-            if (direction=="R") {
+            if (direction==inflateDirection.R) {
                 while (!obl.inflateRightWillCross(linesListDouble,inflate)) {
                     obl.inflateRigth(inflate);
                     if (obl.obsah>maxInflateArea) {
@@ -68,7 +70,7 @@ namespace CatiaLubeGroove
                     }
                 }                
             }
-            if (direction=="L") {
+            if (direction==inflateDirection.L) {
                 while (!obl.inflateLeftWillCross(linesListDouble,inflate)) {
                     obl.inflateLeft(inflate);
                     if (obl.obsah>maxInflateArea) {
@@ -76,7 +78,7 @@ namespace CatiaLubeGroove
                     }
                 }                
             }
-            if (direction=="B") {
+            if (direction==inflateDirection.B) {
                 while (!obl.inflateBottomWillCross(linesListDouble,inflate)) {
                     obl.inflateBottom(inflate);
                     if (obl.obsah>maxInflateArea) {
@@ -84,7 +86,7 @@ namespace CatiaLubeGroove
                     }
                 }                
             }
-            if (direction=="T") {
+            if (direction==inflateDirection.T) {
                 while (!obl.inflateTopWillCross(linesListDouble,inflate)) {
                     obl.inflateTop(inflate);
                     if (obl.obsah>maxInflateArea) {

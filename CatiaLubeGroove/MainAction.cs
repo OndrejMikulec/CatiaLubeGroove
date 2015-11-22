@@ -52,11 +52,13 @@ namespace CatiaLubeGroove
         static List<double[]> pointsListDouble = new List<double[]>();
         static List<double[]> linesListDouble = new List<double[]>();
         
-        static string type;
+        static grooveType type;
+        
+        public enum grooveType {Cross,ZigZag}
         
 
         /// <param name="type">accepting params: {Cross, ZigZag}</param>
-        public static void mainAction(string type, double width, double depth, double edges, bool isolateKeyAuto, bool debugRastr,  bool debugInflated )
+        public static void mainAction(grooveType type, double width, double depth, double edges, bool isolateKeyAuto, bool debugRastr,  bool debugInflated )
         {
         	//all try
         	try {
@@ -320,37 +322,37 @@ namespace CatiaLubeGroove
                 bool leaked = false;
                 if (count==1 ) {
                     double initilaArea = obl.obsah;
-                    leaked = SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
+                    leaked = SupportClass.inflationLoop(SupportClass.inflateDirection.B,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.R,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.T,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.L,obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
                 }
                 if (count==2 ) {
                     double initilaArea = obl.obsah;
-                    leaked = SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
+                    leaked = SupportClass.inflationLoop(SupportClass.inflateDirection.T,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.L,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.B,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.R,obl,linesListDouble,inflateX,initilaArea,maxInflateArea);
                 }
                 if (count==3 ) {
                     double initilaArea = obl.obsah;
-                    leaked =  SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
+                    leaked =  SupportClass.inflationLoop(SupportClass.inflateDirection.R,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.T,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.L,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.B,obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
                 }
                 if (count==4 ) {
                     double initilaArea = obl.obsah;
-                    leaked =  SupportClass.inflationLoop("L",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("B",obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("R",obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
-                    || SupportClass.inflationLoop("T",obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
+                    leaked =  SupportClass.inflationLoop(SupportClass.inflateDirection.L,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.B,obl,linesListDouble,inflateY,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.R,obl,linesListDouble,inflateX,initilaArea,maxInflateArea)
+                    || SupportClass.inflationLoop(SupportClass.inflateDirection.T,obl,linesListDouble,inflateY,initilaArea,maxInflateArea);
                 }
                 if (!leaked) {
-                	if (type=="Cross"&&Math.Min(obl.A,obl.B)>width*2) {
+                	if (type==grooveType.Cross&&Math.Min(obl.A,obl.B)>width*2) {
                 		maxObdelnikListIflatedNoLeak.Add(obl);
                 	}
-                	if (type=="ZigZag"&&Math.Min(obl.A,obl.B)>width*3) {
+                	if (type==grooveType.ZigZag&&Math.Min(obl.A,obl.B)>width*3) {
                 		maxObdelnikListIflatedNoLeak.Add(obl);
                 	}                	
                  }
@@ -395,7 +397,7 @@ namespace CatiaLubeGroove
 	            oPart.Update();
 	            oFactory2D = oSketch.OpenEdition();
              
-	            if (type=="ZigZag") {
+	            if (type==grooveType.ZigZag) {
 	            	finalZigZagLube.toSketch(oFactory2D);
 	            } else {
 	            	finalcrossLube.toSketch(oFactory2D);

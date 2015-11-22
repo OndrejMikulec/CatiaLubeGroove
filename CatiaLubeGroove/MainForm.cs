@@ -144,14 +144,14 @@ namespace CatiaLubeGroove
 		void ButtonActionXClick(object sender, EventArgs e)
 		{
 			disableAll();
-			MainAction.mainAction("Cross",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
+			MainAction.mainAction(MainAction.grooveType.Cross,Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
 			enableAll();
 		}
 		
 		void ButtonActionWClick(object sender, EventArgs e)
 		{
 			disableAll();
-			MainAction.mainAction("ZigZag",Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
+			MainAction.mainAction(MainAction.grooveType.ZigZag,Double.Parse(textBoxWidth.Text),Double.Parse(textBoxDepth.Text),Double.Parse(textBoxEdges.Text),checkBoxIsolateAuto.Checked,debug1,debug2);
 			enableAll();
 		}
 		
