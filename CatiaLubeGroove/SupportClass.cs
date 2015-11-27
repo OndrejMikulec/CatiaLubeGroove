@@ -42,14 +42,14 @@ namespace CatiaLubeGroove
 		
 		public enum inflateDirection  {L,R,T,B}
 
-        public static myObdelnik optimalMaxAndABRatio(List<myObdelnik> inputList)
+        public static myRectangle optimalMaxAndABRatio(List<myRectangle> inputList)
         {
             inputList = inputList.OrderBy(o=>o.obsah).ToList();
             inputList.Reverse();
             
-            myObdelnik winner = inputList[0];
+            myRectangle winner = inputList[0];
             
-            foreach (myObdelnik obl in inputList) {
+            foreach (myRectangle obl in inputList) {
             	if (obl!=winner && obl.obsah>=winner.obsah*0.75 && Math.Max(obl.A,obl.B)*0.5>Math.Max(winner.A,winner.B) && obl.ABRatio>0.1) {
                     winner = obl;
                 }
@@ -60,7 +60,7 @@ namespace CatiaLubeGroove
         
         /// <param name="direction">accepting params: {R, L, B, T}</param>
         /// <returns>If leaked = True</returns>
-        public static bool inflationLoop(inflateDirection direction, myObdelnik obl, List<double[]> linesListDouble, double inflate, double initilaArea,double maxInflateArea)
+        public static bool inflationLoop(inflateDirection direction, myRectangle obl, List<double[]> linesListDouble, double inflate, double initilaArea,double maxInflateArea)
         {
             if (direction==inflateDirection.R) {
                 while (!obl.inflateRightWillCross(linesListDouble,inflate)) {

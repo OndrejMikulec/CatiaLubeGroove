@@ -276,37 +276,37 @@ namespace CatiaLubeGroove
                 rastrY = 0.1;
             }
             
-            List<myObdelnik> allObdelnikInThisLimit = new List<myObdelnik>();
+            List<myRectangle> allRectanglesInThisLimit = new List<myRectangle>();
             
             double rastrXvalue = minX;
             double rastrYvalue = minY;
             while (rastrYvalue<maxY) {
                 while (rastrXvalue<maxX) {
-                    myObdelnik rastrInsideLim = new myObdelnik(rastrXvalue,rastrYvalue,rastrXvalue+rastrX,rastrYvalue+rastrY);
-                    allObdelnikInThisLimit.Add(rastrInsideLim);
+                    myRectangle rastrInsideLim = new myRectangle(rastrXvalue,rastrYvalue,rastrXvalue+rastrX,rastrYvalue+rastrY);
+                    allRectanglesInThisLimit.Add(rastrInsideLim);
                     rastrXvalue += rastrX;
                 }
                 rastrXvalue = minX;
                 rastrYvalue += rastrY;
             }
  
-            List<myObdelnik> allObdelnikInThisLimitNoZero = new List<myObdelnik>();
-            foreach (myObdelnik obl in allObdelnikInThisLimit) {
+            List<myRectangle> allRectanglesInThisLimitNoZero = new List<myRectangle>();
+            foreach (myRectangle obl in allRectanglesInThisLimit) {
                 if (obl.obsah!=0) {
             		obl.resizeAllEdges(-Math.Min(rastrX,rastrY)*0.1);
-                    allObdelnikInThisLimitNoZero.Add(obl);
+                    allRectanglesInThisLimitNoZero.Add(obl);
                 }
             }            
 
-            List<myObdelnik> allObdelnikInThisLimitNoCross = new List<myObdelnik>();
-            foreach (myObdelnik obl2 in allObdelnikInThisLimitNoZero) {
-                if (!obl2.anyLineFromListCrossObdelnik(linesListDouble)) {
-                    allObdelnikInThisLimitNoCross.Add(obl2);
+            List<myRectangle> allRectanglesInThisLimitNoCross = new List<myRectangle>();
+            foreach (myRectangle obl2 in allRectanglesInThisLimitNoZero) {
+                if (!obl2.anyLineFromListCrossRectangle(linesListDouble)) {
+                    allRectanglesInThisLimitNoCross.Add(obl2);
                 }
             }  
             
             if (debugRastr) {
-            	DebugCreateAll.createAll(allObdelnikInThisLimitNoCross,oSketch,catiaInstance);
+            	DebugCreateAll.createAll(allRectanglesInThisLimitNoCross,oSketch,catiaInstance);
             }            
             
             
@@ -315,9 +315,9 @@ namespace CatiaLubeGroove
             double inflateY = rastrY/10;
             double maxInflateAreaEdge = Math.Max(Math.Abs(maxX-minX)+rastrX,Math.Abs(maxY-minY)+rastrY);
             double maxInflateArea = maxInflateAreaEdge*maxInflateAreaEdge;
-            List<myObdelnik> maxObdelnikListIflatedNoLeak = new List<myObdelnik>();
+            List<myRectangle> maxRectanglesListIflatedNoLeak = new List<myRectangle>();
             int count = 1;
-            foreach (myObdelnik obl in allObdelnikInThisLimitNoCross) {
+            foreach (myRectangle obl in allRectanglesInThisLimitNoCross) {
                 obl.resizeAllEdges(-Math.Min(rastrX,rastrY)*0.1);
                 bool leaked = false;
                 if (count==1 ) {
@@ -350,10 +350,10 @@ namespace CatiaLubeGroove
                 }
                 if (!leaked) {
                 	if (type==grooveType.Cross&&Math.Min(obl.A,obl.B)>width*2) {
-                		maxObdelnikListIflatedNoLeak.Add(obl);
+                		maxRectanglesListIflatedNoLeak.Add(obl);
                 	}
                 	if (type==grooveType.ZigZag&&Math.Min(obl.A,obl.B)>width*3) {
-                		maxObdelnikListIflatedNoLeak.Add(obl);
+                		maxRectanglesListIflatedNoLeak.Add(obl);
                 	}                	
                  }
                 
@@ -364,14 +364,14 @@ namespace CatiaLubeGroove
             }
             
             if (debugInflated) {
-            	DebugCreateAll.createAll(maxObdelnikListIflatedNoLeak,oSketch,catiaInstance);
+            	DebugCreateAll.createAll(maxRectanglesListIflatedNoLeak,oSketch,catiaInstance);
             }
             
-            List<myObdelnik> maxObdelnikListIflatedNoLeakEdgesResized = new List<myObdelnik>();
-            foreach (myObdelnik obl in maxObdelnikListIflatedNoLeak) {
+            List<myRectangle> maxRectangleListIflatedNoLeakEdgesResized = new List<myRectangle>();
+            foreach (myRectangle obl in maxRectanglesListIflatedNoLeak) {
             	obl.resizeAllEdges(-edges);
             	if (obl.obsah>0) {
-            		maxObdelnikListIflatedNoLeakEdgesResized.Add(obl);
+            		maxRectangleListIflatedNoLeakEdgesResized.Add(obl);
             	}
             }
    
@@ -380,19 +380,19 @@ namespace CatiaLubeGroove
             double finalP2x = 0;
             double finalP2y = 0;
 
-            myObdelnik win = null;
-            if (maxObdelnikListIflatedNoLeakEdgesResized.Count>0) {
+            myRectangle win = null;
+            if (maxRectangleListIflatedNoLeakEdgesResized.Count>0) {
              	
-                win = SupportClass.optimalMaxAndABRatio(maxObdelnikListIflatedNoLeakEdgesResized);
+                win = SupportClass.optimalMaxAndABRatio(maxRectangleListIflatedNoLeakEdgesResized);
                 
                 finalP1x = Math.Round( win.P1x,1);
                 finalP1y =  Math.Round(win.P1y,1);
                 finalP2x =  Math.Round(win.P2x,1);
                 finalP2y =  Math.Round(win.P2y,1);
                 
-                myObdelnik finalObdelnik = new myObdelnik(finalP1x,finalP1y,finalP2x,finalP2y);
-                crossLube finalcrossLube = new crossLube(finalObdelnik,width,depth);
-                ZigZagLube finalZigZagLube = new ZigZagLube(finalObdelnik,width,depth);
+                myRectangle finalRectangle = new myRectangle(finalP1x,finalP1y,finalP2x,finalP2y);
+                crossLube finalcrossLube = new crossLube(finalRectangle,width,depth);
+                ZigZagLube finalZigZagLube = new ZigZagLube(finalRectangle,width,depth);
            	            
 	            oPart.Update();
 	            oFactory2D = oSketch.OpenEdition();

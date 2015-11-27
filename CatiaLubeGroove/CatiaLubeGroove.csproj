@@ -82,7 +82,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyObdelnik.cs" />
+    <Compile Include="MyRectangle.cs" />
     <Compile Include="PlanarfaceWithReference.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

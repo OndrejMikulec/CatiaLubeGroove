@@ -52,7 +52,7 @@ namespace CatiaLubeGroove
 
     	
     	
-    	public crossLube(myObdelnik obl, double width, double depth)
+    	public crossLube(myRectangle obl, double width, double depth)
     	{
     		double cornerX = Math.Cos(Math.PI-Math.PI/2-Math.Atan2(obl.B,obl.A))*width;
     		double cornerY = Math.Sin(Math.PI-Math.PI/2-Math.Atan2(obl.B,obl.A))*width;

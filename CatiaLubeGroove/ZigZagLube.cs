@@ -46,7 +46,7 @@ namespace CatiaLubeGroove
     	double width;
     	double depth;
     	
-		public ZigZagLube(myObdelnik obl, double width, double depth)
+		public ZigZagLube(myRectangle obl, double width, double depth)
 		{
     		this.width = width;
     		this.depth = depth;
